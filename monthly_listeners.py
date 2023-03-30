@@ -19,7 +19,7 @@ def get_artist_info(url):
     monthly_listeners = div_tag.text
 
     # Return the artist name and monthly listeners as a tuple
-    return (artist_name, monthly_listeners.replace('ouvintes mensais', 'Ouvintes mensais'))
+    return (artist_name, monthly_listeners.replace('monthly listeners', 'Ouvintes mensais'))
 
 
 # Example usage
@@ -38,7 +38,7 @@ artists = [
 # Create a CSV file and write the header row
 with open('artists.csv', 'w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Artist", "Monthly Listeners"])
+    writer.writerow(["Artista", "Ouvintes Mensais"])
 
     # Loop through each artist and write their information to the CSV file
     for artist_url in artists:

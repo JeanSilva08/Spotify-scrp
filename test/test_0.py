@@ -18,7 +18,7 @@ def get_artist_info(url):
     monthly_listeners = div_tag.text
 
     # Return the artist name and monthly listeners as a tuple
-    return (artist_name, monthly_listeners.replace('ouvintes mensais', 'Ouvintes mensais'))
+    return (artist_name, monthly_listeners.replace('monthly listeners', 'Ouvintes mensais'))
 
 
 # Example usage
