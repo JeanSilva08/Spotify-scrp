@@ -7,7 +7,7 @@ client_id = ''
 client_secret = ''
 
 # Enter the artist names below
-artist_names = ['Orochi', 'Mc Poze do Rodo', 'Oruam' , 'Raffé', 'Borges', 'PL Quest', 'Kizzy', 'Bielzin']
+artist_names = ['L7nnon', 'Xamã', 'WIU' , 'MC Cabelinho', 'Orochi', 'Neobeats', 'Teto', 'Matuê', 'Oruam', 'Pineapple Storm', 'Mainstreet', 'Felipe Ret', 'Chefin', 'Salve Malak', 'TZ da Coronel', 'Ajaxx', 'Dallas', 'Chris MC', 'MC Poze', 'Bin', 'Mello', 'Vulgo FK', 'Delacruz', 'Hungria', 'Djonga ', 'N.I.N.A', 'Borges', 'Nagalli', 'Baco Exu do Blues', 'BK', 'Caio Luccas', 'Galdino', 'PK', 'Caio Passos', 'DJ Matt D', 'Victor Wao', 'Azzy', 'DJ Gustah', 'AMUSIK', 'Menor MC', 'Emicida', 'Lourena', 'Bielzin', 'Supernova Ent.', 'Medellin', 'Kweller', 'Luiz Lins', 'Kawe', 'Pedro Lotto', 'MãoLee', 'Coyote Beatz', 'Skeeter Beats', 'MD Chefe ', '1KILO', 'Cynthia Luz', 'Luccas Carlos', 'Tropkillaz', 'Marcelo D2', 'Nada Mal', 'Projota ', 'Papatinho', 'Jess Beats', 'Costa Gold', 'Negra Li', 'Froid', 'César MC', 'Sidoka', 'Dfideliz', 'Malibu Studios', 'Budah', 'Chris Beats ZN', 'Kizzy', 'OQ Produções', 'Jaya Luck', 'PL Quest', 'WC no Beat', 'Raffé', 'CalliCartel', 'Orgânico', 'Leviano', 'Hash Produções', 'Uclã Records', 'Altamira TV', 'André Nine', 'Rashid', 'Clau', 'WEY', 'Rock Danger', 'Karol Conka', 'Offlei Sounds', 'Black', 'Flora matos ', 'Aldeia Records', 'Isso que é som de RAP', 'Mvk', 'A Banca Records', 'Paiva Prod', 'Alaska', 'Pior versão de mim ', 'Shenlong', 'Distrito 23', 'Tropa do Bruxo', 'Buddy Poke ', 'Ebony', 'Drik Barbosa', 'LP Beatzz', 'MC Filhão ', 'Clara Lima', 'Feek', 'Intactoz Corp.', 'Elenko Music', 'Hashi', 'Oreozin', 'CMK', '7Minutoz', 'Oliveira']
 
 # Task 1: Get the number of followers for an artist
 
@@ -35,7 +35,7 @@ def export_data(artist_name, num_followers, popularity, first_time):
     with open('artists_data.csv', 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         if first_time:
-            writer.writerow(['Artista', 'Número de seguidores', 'Pontos de Popularidade'])
+            writer.writerow(['Artista', 'Seguidores', 'Popularidade 0-100'])
         writer.writerow([artist_name, num_followers, popularity])
     print(f'The data for {artist_name} has been exported to artists_data.csv.')
 

@@ -1,39 +1,45 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-# Enter your Spotify API credentials below
 client_id = ''
 client_secret = ''
 
-def get_artist_top_tracks(artist_id):
-    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
-    top_tracks = sp.artist_top_tracks(artist_id)
-    return top_tracks
+# prompt the user to enter the artist and playlist URLs
+artist_url = input("Enter the artist URL: ")
+playlist_url = input("Enter the playlist URL: ")
 
-def get_playlist_tracks(playlist_url):
-    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
-    playlist_id = playlist_url.split('/')[-1]
-    tracks = sp.playlist_tracks(playlist_id)['items']
-    playlist_tracks = []
-    for track in tracks:
-        playlist_tracks.append(track['track']['name'])
-    return playlist_tracks
+# authenticate with Spotify Web API
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
 
-def find_artist_top_songs_in_playlist(artist_id, playlist_url):
-    artist_top_songs = get_artist_top_tracks(artist_id)
-    playlist_tracks = get_playlist_tracks(playlist_url)
-    occurrence_dict = {}
-    for track in artist_top_songs['tracks']:
-        if track['name'] in playlist_tracks:
-            occurrence_dict[track['name']] = playlist_tracks.count(track['name'])
-    if not occurrence_dict:
-        print("Nenhuma música na playlist")
-    else:
-        print("Ocorrência das músicas do artista na playlist:")
-        for song, occurrence in occurrence_dict.items():
-            print(f"{song}: {occurrence}")
+# get the artist ID from the API
+artist_id = sp.artist(artist_url)['id']
 
-# Example usage:
-playlist_url = "https://open.spotify.com/playlist/37i9dQZEVXbMXbN3EUUhlg"
-artist_id = "3rfM2cGqF6DB0kUyytMkXx" 
-find_artist_top_songs_in_playlist(artist_id, playlist_url)
+# get the playlist ID from the API
+playlist_id = playlist_url.split('/')[-1]
+
+# get the tracks from the playlist
+playlist_tracks = []
+offset = 0
+while True:
+    tracks = sp.playlist_tracks(playlist_id, offset=offset)
+    playlist_tracks.extend(tracks['items'])
+    offset += len(tracks['items'])
+    if not tracks['next']:
+        break
+
+# check if the artist is in any of the tracks
+for track in playlist_tracks:
+    # get the track details from the API
+    track_id = track['track']['id']
+    track_details = sp.track(track_id)
+
+    # check if the artist is in the track artist list
+    for track_artist in track_details['artists']:
+        if track_artist['id'] == artist_id:
+            print(f"{artist_url} has a track in the playlist {playlist_url}: {track_details['name']}")
+            break
+        elif ' featuring ' in track_details['name'].lower():
+            # check if the artist is featured in the track
+            if artist_id in [feat['id'] for feat in track_details['artists']]:
+                print(f"{artist_url} has a featured track in the playlist {playlist_url}: {track_details['name']}")
+                break
